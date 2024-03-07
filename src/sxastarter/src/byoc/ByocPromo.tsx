@@ -51,17 +51,17 @@ FEAAS.External.registerComponent(ByocAdvancedPromo, {
   definitions: {
     spacing: {
       type: 'string',
-      title: 'Spacing',
+      title: 'SPACING',
       enum: ['', 'indent-top', 'indent-bottom', 'indent'],
     },
     addhighlight: {
       type: 'string',
-      title: 'Add Highlight',
+      title: 'ADD HIGHLIGHT',
       enum: ['', 'highlighted-left', 'highlighted-right', 'highlighted-top', 'highlighted-bottom'],
     },
     contentalignment: {
       type: 'string',
-      title: 'Content Alignment',
+      title: 'CONTENT ALIGNMENT',
       enum: ['', 'position-left', 'position-center', 'position-right'],
     },
   },
