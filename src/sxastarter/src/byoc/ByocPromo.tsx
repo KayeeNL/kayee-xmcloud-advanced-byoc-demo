@@ -6,6 +6,11 @@ interface ByocPromoProps {
   text: string;
   url: string;
   urlText: string;
+  styling: {
+    spacing: string;
+    addhighlight: string;
+    contentalignment: string;
+  };
 }
 
 export const ByocAdvancedPromo = (props: ByocPromoProps): JSX.Element => {
@@ -82,14 +87,20 @@ FEAAS.External.registerComponent(ByocAdvancedPromo, {
       title: 'Url Text',
       description: 'Please fill in the text that should be displayed on the button',
     },
-    spacing: {
-      $ref: '#/definitions/spacing',
-    },
-    addhighlight: {
-      $ref: '#/definitions/addhighlight',
-    },
-    contentalignment: {
-      $ref: '#/definitions/contentalignment',
+    styling: {
+      type: 'object',
+      title: 'Styling',
+      properties: {
+        spacing: {
+          $ref: '#/definitions/spacing',
+        },
+        addhighlight: {
+          $ref: '#/definitions/addhighlight',
+        },
+        contentalignment: {
+          $ref: '#/definitions/contentalignment',
+        },
+      },
     },
   },
   ui: {
