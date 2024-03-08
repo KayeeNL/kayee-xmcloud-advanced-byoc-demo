@@ -25,7 +25,6 @@ export const ByocAdvancedPromo = (props: ByocPromoProps): JSX.Element => {
   const promoCssClasses = ConvertToCssClasses(props.styling?.promo);
   const imageCssClasses = ConvertToCssClasses(props.styling?.image);
   const commonCssClasses = ConvertToCssClasses(props.styling?.common);
-  console.log(props.styling);
   return (
     <div
       className={`component promo col-12 ${basicSiteCssClasses} ${spacingCssClasses} ${addHighlightCssClasses} ${contentAlignmentCssClasses} ${promoCssClasses} ${imageCssClasses} ${commonCssClasses}`}
@@ -157,6 +156,17 @@ FEAAS.External.registerComponent(ByocAdvancedPromo, {
       'ui:autofocus': true,
       'ui:emptyValue': '',
       'ui:placeholder': 'Write a great Promo text',
+    },
+    styling: {
+      promo: {
+        'ui:widget': 'checkboxes',
+      },
+      image: {
+        'ui:widget': 'checkboxes',
+      },
+      common: {
+        'ui:widget': 'checkboxes',
+      },
     },
   },
 });
