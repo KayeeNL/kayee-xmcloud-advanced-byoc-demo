@@ -14,8 +14,9 @@ interface ByocPromoProps {
 }
 
 export const ByocAdvancedPromo = (props: ByocPromoProps): JSX.Element => {
+  console.log(props.styling);
   return (
-    <div className="component promo col-12 link-button">
+    <div className={`component promo col-12 link-button ${props.styling?.spacing} ${props.styling?.addhighlight} ${props.styling?.contentalignment}`}>
       <div className="component-content">
         <div className="field-promoicon">
           {props.imageUrl && <img alt="Kayee" width="2000" height="1116" src={props.imageUrl} />}
