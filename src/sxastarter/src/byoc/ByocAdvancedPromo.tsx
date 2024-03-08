@@ -7,8 +7,9 @@ interface ByocPromoProps {
   url: string;
   urlText: string;
   styling: {
-    spacing: string;
-    addhighlight: string;
+    basicsite: string;
+    spacing: string[];
+    addhighlight: string[];
     contentalignment: string;
     promo: string[];
     image: string[];
@@ -17,13 +18,17 @@ interface ByocPromoProps {
 }
 
 export const ByocAdvancedPromo = (props: ByocPromoProps): JSX.Element => {
-  const promoCssClasses = ConvertToCssClasses(props.styling.promo);
-  const imageCssClasses = ConvertToCssClasses(props.styling.image);
-  const commonCssClasses = ConvertToCssClasses(props.styling.common);
+  const basicSiteCssClasses = ConvertToCssClasses([props.styling?.basicsite]);
+  const spacingCssClasses = ConvertToCssClasses(props.styling?.spacing);
+  const addHighlightCssClasses = ConvertToCssClasses(props.styling?.addhighlight);
+  const contentAlignmentCssClasses = ConvertToCssClasses([props.styling?.contentalignment]);
+  const promoCssClasses = ConvertToCssClasses(props.styling?.promo);
+  const imageCssClasses = ConvertToCssClasses(props.styling?.image);
+  const commonCssClasses = ConvertToCssClasses(props.styling?.common);
   console.log(props.styling);
   return (
     <div
-      className={`component promo col-12 ${props.styling?.spacing} ${props.styling?.addhighlight} ${props.styling?.contentalignment} ${promoCssClasses} ${imageCssClasses} ${commonCssClasses}`}
+      className={`component promo col-12 ${basicSiteCssClasses} ${spacingCssClasses} ${addHighlightCssClasses} ${contentAlignmentCssClasses} ${promoCssClasses} ${imageCssClasses} ${commonCssClasses}`}
     >
       <div className="component-content">
         <div className="field-promoicon">
@@ -57,23 +62,6 @@ FEAAS.External.registerComponent(ByocAdvancedPromo, {
   thumbnail:
     'http://xmcloudcm.localhost/-/media/Project/Kayee/shared/kayee-blogpost-15x-sitecore-mvp-award-2024.png?h=1116&amp;iar=0&amp;w=2000&amp;hash=E2C0DDB5A74094A79E34C2321845F27C',
   group: 'BYOC - Promos',
-  definitions: {
-    spacing: {
-      type: 'string',
-      title: 'SPACING',
-      enum: ['', 'indent-top', 'indent-bottom', 'indent'],
-    },
-    addhighlight: {
-      type: 'string',
-      title: 'ADD HIGHLIGHT',
-      enum: ['', 'highlighted-left', 'highlighted-right', 'highlighted-top', 'highlighted-bottom'],
-    },
-    contentalignment: {
-      type: 'string',
-      title: 'CONTENT ALIGNMENT',
-      enum: ['', 'position-left', 'position-center', 'position-right'],
-    },
-  },
   properties: {
     imageUrl: {
       type: 'string',
@@ -100,14 +88,39 @@ FEAAS.External.registerComponent(ByocAdvancedPromo, {
       type: 'object',
       title: 'Styling',
       properties: {
+        basicsite: {
+          type: 'string',
+          title: 'BASICSITE',
+          enum: ['', 'Main - Promo'],
+        },
         spacing: {
-          $ref: '#/definitions/spacing',
+          type: 'array',
+          title: 'SPACING',
+          items: {
+            type: 'string',
+            enum: ['', 'Indent Top', 'Indent Bottom', 'Indent Side'],
+          },
+          uniqueItems: true,
         },
         addhighlight: {
-          $ref: '#/definitions/addhighlight',
+          type: 'array',
+          title: 'ADD HIGHLIGHT',
+          items: {
+            type: 'string',
+            enum: [
+              '',
+              'Highlighted left',
+              'Highlighted right',
+              'Highlighted top',
+              'Highlighted bottom',
+            ],
+          },
+          uniqueItems: true,
         },
         contentalignment: {
-          $ref: '#/definitions/contentalignment',
+          type: 'string',
+          title: 'CONTENT ALIGNMENT',
+          enum: ['', 'Align content left', 'Align content center', 'Align content right'],
         },
         promo: {
           type: 'array',
@@ -152,8 +165,23 @@ interface CssClassMapping {
   [key: string]: string;
 }
 
-function ConvertToCssClasses(input: string[]) {
+function ConvertToCssClasses(input: string[] | undefined) {
+  if (!input) {
+    return '';
+  }
+
   const classMap: CssClassMapping = {
+    'Main - Promo': 'main-promo-no-border',
+    'Indent Top': 'indent-top',
+    'Indent Bottom': 'indent-bottom',
+    'Indent Side': 'indent',
+    'Highlighted left': 'highlighted-left',
+    'Highlighted right': 'highlighted-right',
+    'Highlighted top': 'highlighted-top',
+    'Highlighted bottom': 'highlighted-bottom',
+    'Align content left': 'position-left',
+    'Align content center': 'position-center',
+    'Align content right': 'position-right',
     'Promo hero': 'promo-hero',
     'Promo shadow': 'promo-shadow',
     'Attach link to bottom': 'absolute-bottom-link',
