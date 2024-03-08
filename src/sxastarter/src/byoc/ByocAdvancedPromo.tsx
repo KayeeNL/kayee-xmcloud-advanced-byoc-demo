@@ -10,13 +10,21 @@ interface ByocPromoProps {
     spacing: string;
     addhighlight: string;
     contentalignment: string;
+    promo: string[];
+    image: string[];
+    common: string[];
   };
 }
 
 export const ByocAdvancedPromo = (props: ByocPromoProps): JSX.Element => {
+  const promoCssClasses = ConvertToCssClasses(props.styling.promo);
+  const imageCssClasses = ConvertToCssClasses(props.styling.image);
+  const commonCssClasses = ConvertToCssClasses(props.styling.common);
   console.log(props.styling);
   return (
-    <div className={`component promo col-12 link-button ${props.styling?.spacing} ${props.styling?.addhighlight} ${props.styling?.contentalignment}`}>
+    <div
+      className={`component promo col-12 ${props.styling?.spacing} ${props.styling?.addhighlight} ${props.styling?.contentalignment} ${promoCssClasses} ${imageCssClasses} ${commonCssClasses}`}
+    >
       <div className="component-content">
         <div className="field-promoicon">
           {props.imageUrl && <img alt="Kayee" width="2000" height="1116" src={props.imageUrl} />}
@@ -101,6 +109,33 @@ FEAAS.External.registerComponent(ByocAdvancedPromo, {
         contentalignment: {
           $ref: '#/definitions/contentalignment',
         },
+        promo: {
+          type: 'array',
+          title: 'PROMO',
+          items: {
+            type: 'string',
+            enum: ['Promo hero', 'Promo shadow', 'Attach link to bottom'],
+          },
+          uniqueItems: true,
+        },
+        image: {
+          type: 'array',
+          title: 'IMAGE',
+          items: {
+            type: 'string',
+            enum: ['Image default size'],
+          },
+          uniqueItems: true,
+        },
+        common: {
+          type: 'array',
+          title: 'COMMON',
+          items: {
+            type: 'string',
+            enum: ['No borders', 'Button link style'],
+          },
+          uniqueItems: true,
+        },
       },
     },
   },
@@ -112,3 +147,20 @@ FEAAS.External.registerComponent(ByocAdvancedPromo, {
     },
   },
 });
+
+interface CssClassMapping {
+  [key: string]: string;
+}
+
+function ConvertToCssClasses(input: string[]) {
+  const classMap: CssClassMapping = {
+    'Promo hero': 'promo-hero',
+    'Promo shadow': 'promo-shadow',
+    'Attach link to bottom': 'absolute-bottom-link',
+    'No borders': 'promoted-box',
+    'Button link style': 'link-button',
+    'Image default size': 'image-default-size',
+  };
+
+  return input.map((className) => classMap[className] || '').join(' ');
+}
