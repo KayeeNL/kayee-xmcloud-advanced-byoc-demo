@@ -15,6 +15,10 @@ interface ByocPromoProps {
     image: string[];
     common: string[];
   };
+  advancedstyling: {
+    id: string;
+    cssstyles: string;
+  };
 }
 
 export const ByocAdvancedPromo = (props: ByocPromoProps): JSX.Element => {
@@ -27,7 +31,7 @@ export const ByocAdvancedPromo = (props: ByocPromoProps): JSX.Element => {
   const commonCssClasses = ConvertToCssClasses(props.styling?.common);
   return (
     <div
-      className={`component promo col-12 ${basicSiteCssClasses} ${spacingCssClasses} ${addHighlightCssClasses} ${contentAlignmentCssClasses} ${promoCssClasses} ${imageCssClasses} ${commonCssClasses}`}
+      className={`component promo col-12 ${basicSiteCssClasses} ${spacingCssClasses} ${addHighlightCssClasses} ${contentAlignmentCssClasses} ${promoCssClasses} ${imageCssClasses} ${commonCssClasses} ${props.advancedstyling?.cssstyles}`}
     >
       <div className="component-content">
         <div className="field-promoicon">
@@ -147,6 +151,20 @@ FEAAS.External.registerComponent(ByocAdvancedPromo, {
             enum: ['No borders', 'Button link style'],
           },
           uniqueItems: true,
+        },
+      },
+    },
+    advancedstyling: {
+      type: 'object',
+      title: 'Advanced styling',
+      properties: {
+        id: {
+          type: 'string',
+          title: 'ID',
+        },
+        cssstyles: {
+          type: 'string',
+          title: 'CSS STYLES',
         },
       },
     },
